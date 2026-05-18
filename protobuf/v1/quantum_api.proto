@@ -14,7 +14,7 @@ message Hash {
 
 message Signature {
   bytes value = 1;
-  string algorithm = 2; // expected: ML-DSA-65 or ML-DSA-87
+  string algorithm = 2; // expected: ML-DSA-44, ML-DSA-65, or ML-DSA-87
 }
 
 message Transaction {

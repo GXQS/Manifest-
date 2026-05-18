@@ -8,7 +8,7 @@
 ## Memory Expansion Formula
 For memory growth from `m_prev` to `m_new` words (`m_new >= m_prev`):
 
-`mem_cost(m) = G_memory * m + floor(m * m / Q_memory)`
+`mem_cost(m) = G_memory * m + ((m * m) / Q_memory)`
 
 Expansion charge:
 
