@@ -1,0 +1,63 @@
+name: Protocol Drift Verification
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [pr-opened]
+  workflow_dispatch:
+
+jobs:
+  verify-alignment:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Manifest Source of Truth
+        uses: actions/checkout@v4
+
+      - name: Validate required manifest files
+        run: |
+          set -euo pipefail
+          required=(
+            "system-alignment-god-prompt.txt"
+            "versions.json"
+            "protobuf/v1/quantum_api.proto"
+            "spec/consensus_hotstuff.md"
+            "spec/gxvm_gas_matrix.md"
+            "spec/pqc_memory_bounds.md"
+          )
+          for file in "${required[@]}"; do
+            test -f "$file"
+          done
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate versions schema
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          try:
+              data = json.loads(Path("versions.json").read_text(encoding="utf-8"))
+          except json.JSONDecodeError as exc:
+              raise SystemExit(f"versions.json contains invalid JSON: {exc}") from exc
+          assert isinstance(data.get("protocol_version"), str) and data["protocol_version"], "protocol_version must be a non-empty string"
+          modules = data.get("modules")
+          assert isinstance(modules, dict) and modules, "modules must be a non-empty object"
+
+          required = {
+            "core", "smartcontracts", "wallet", "explorer", "remixgxqs",
+            "validator", "p2p", "observability", "bridge", "sdk",
+            "cryptography", "testnet", "devops"
+          }
+          missing = sorted(required.difference(modules.keys()))
+          assert not missing, f"missing module versions: {', '.join(missing)}"
+          for key, value in modules.items():
+            assert isinstance(value, str) and value, f"module version for {key} must be a non-empty string"
+          PY
