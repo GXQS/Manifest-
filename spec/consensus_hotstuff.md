@@ -28,7 +28,7 @@ All QCs and timeout certificates require at least `2f + 1` unique validator sign
 ## Proposer Selection
 Proposer selection is deterministic:
 `proposer_index = H(epoch || view || previous_qc_hash) mod validator_count`
-where `H = SHA3-256`.
+where `H = SHA-3-256`.
 
 ## Epoch Transitions
 Epoch transitions are activated only by finalized blocks containing validator-set updates.
