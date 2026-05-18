@@ -8,7 +8,7 @@
 ## Memory Expansion Formula
 For memory growth from `m_prev` to `m_new` words (`m_new >= m_prev`), where one word is exactly 32 bytes:
 
-`mem_cost(m) = G_memory * m + ((m * m) / Q_memory)`
+`mem_cost(m) = G_memory * m + ((m * m) / Q_memory)` using integer division with truncation toward zero.
 
 Expansion charge:
 
