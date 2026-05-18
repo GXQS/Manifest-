@@ -1,0 +1,18 @@
+{
+  "protocol_version": "v0.1.0-beta",
+  "modules": {
+    "core": "v0.1.0-beta",
+    "smartcontracts": "v0.1.0-beta",
+    "wallet": "v0.1.0-beta",
+    "explorer": "v0.1.0-beta",
+    "remixgxqs": "v0.1.0-beta",
+    "validator": "v0.1.0-beta",
+    "p2p": "v0.1.0-beta",
+    "observability": "v0.1.0-beta",
+    "bridge": "v0.1.0-beta",
+    "sdk": "v0.1.0-beta",
+    "cryptography": "v0.1.0-beta",
+    "testnet": "v0.1.0-beta",
+    "devops": "v0.1.0-beta"
+  }
+}
