@@ -6,7 +6,7 @@
 - No floating point operations are allowed.
 
 ## Memory Expansion Formula
-For memory growth from `m_prev` to `m_new` words (`m_new >= m_prev`):
+For memory growth from `m_prev` to `m_new` words (`m_new >= m_prev`), where one word is exactly 32 bytes:
 
 `mem_cost(m) = G_memory * m + ((m * m) / Q_memory)`
 
@@ -35,4 +35,4 @@ ML-DSA verification is charged by payload size buckets to mitigate DoS via overs
 | ---: | ---: |
 | 0 - 4096 | 50_000 |
 | 4097 - 16384 | 90_000 |
-| >16384 | reject transaction |
+| >16384 | reject transaction with `ERR_PQC_PAYLOAD_TOO_LARGE` |
